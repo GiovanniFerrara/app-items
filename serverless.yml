@@ -37,10 +37,10 @@ resources:
         - AttributeName: id
           AttributeType: S
 
-        - AttributeName: location
+        - AttributeName: createdAt
           AttributeType: S
 
-        - AttributeName: email
+        - AttributeName: location-status
           AttributeType: S
             
         KeySchema:

@@ -1,0 +1,5 @@
+module.exports = {
+  AVAILABLE: 'AVAILABLE',
+  BOOKED: 'BOOKED',
+  UNAVAILABLE: 'UNAVAILABLE'
+}
