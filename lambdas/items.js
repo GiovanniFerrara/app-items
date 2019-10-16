@@ -3,10 +3,16 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const ItemsConfig = require('../src/items')
 const db = require('../src/db')
-
+const passport = require('passport')
+const passportConfig = require('../src/utils/passport-config')
 const app = express()
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+
+// Passport Config
+app.use(passport.initialize())
+passportConfig(passport)
 
 // pass db instance to unser model
 const Item = ItemsConfig(db)
