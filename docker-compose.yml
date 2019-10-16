@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  test:
+    build: .
+    environment:
+      - DYNAMODB_TABLE=items-test
+      - IS_LOCAL_ENV=true
+      - JWT_SECRET=test-env-secret
+
+    command: npm run test
+    volumes:
+      - ~/.aws/:/root/.aws/
+      - .:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - "4000:4000"

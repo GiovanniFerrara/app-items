@@ -1,0 +1,71 @@
+service: items
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: dev
+  region: eu-west-2
+  environment:
+    DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+    JWT_SECRET: REPLACE_THIS
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Scan
+        - dynamodb:Query
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+
+functions:
+  items:
+    handler: lambdas/items.handler
+    events:
+      - http:
+         path: items/new
+         method: post
+
+resources:
+  Resources:
+    Items:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+
+        - AttributeName: location
+          AttributeType: S
+
+        - AttributeName: email
+          AttributeType: S
+            
+        KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+          
+        ProvisionedThroughput:
+          ReadCapacityUnits: '1'
+          WriteCapacityUnits: '1'
+
+        GlobalSecondaryIndexes:
+        - IndexName: location-status-index
+
+          KeySchema:
+          - AttributeName: location-status
+            KeyType: HASH
+
+          - AttributeName: createdAt
+            KeyType: RANGE
+
+          Projection:
+            ProjectionType: ALL
+
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
+
+        TableName: ${self:service}-${opt:stage, self:provider.stage}

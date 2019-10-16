@@ -1,0 +1,44 @@
+{
+  "name": "users",
+  "version": "1.0.0",
+  "description": "Core of business logic",
+  "main": "app.js",
+  "scripts": {
+    "dev": "./stage_question.sh ",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GiovanniFerrara/app-items.git"
+  },
+  "keywords": [
+    "items"
+  ],
+  "author": "GiovanniFerrara",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GiovanniFerrara/app-items/issues"
+  },
+  "standard": {
+    "env": [
+      "jest"
+    ]
+  },
+  "homepage": "https://github.com/GiovanniFerrara/app-items#readme",
+  "dependencies": {
+    "aws-sdk": "^2.543.0",
+    "body-parser": "^1.19.0",
+    "error": "^7.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "serverless-http": "^2.3.0",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.18",
+    "faker": "^4.1.0",
+    "jest": "^24.9.0",
+    "nodemon": "^1.19.3",
+    "standard": "^14.3.1"
+  }
+}
