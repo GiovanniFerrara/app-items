@@ -3,25 +3,20 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const ItemsConfig = require('../src/items')
 const db = require('../src/db')
-const passport = require('passport')
-const passportConfig = require('../src/utils/passport-config')
+const middleware = require('../src/middleware')
 const app = express()
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
-
-// Passport Config
-app.use(passport.initialize())
-passportConfig(passport)
+// User middleware to authenticate requests
+app.use(middleware.checkAuth)
 
 // pass db instance to unser model
-const Item = ItemsConfig(db)
+// const Item = ItemsConfig(db)
 
 // Routes
 
-app.post('/user/new', async (req, res) => {
+app.get('/item', async (req, res) => {
   try {
-    // coming soon
+    res.send(req.user)
   } catch (err) {
     console.log(err)
 
@@ -29,6 +24,6 @@ app.post('/user/new', async (req, res) => {
   }
 })
 
-process.env.IS_LOCAL_ENV && app.listen(4000, () => console.log(`Server listening on: 4000, env: ${process.env.DYNAMODB_TABLE}`))
+process.env.IS_LOCAL_ENV && app.listen(3000, () => console.log(`Server listening on: 3000, env: ${process.env.DYNAMODB_TABLE}`))
 
 module.exports.handler = serverless(app)
