@@ -1,16 +1,16 @@
 const validator = require('validator')
 const STATUS = require('../types/status')
 const SITE = require('../types/site')
-const TypedError = require('error/typed')
+// const TypedError = require('error/typed')
 
-const InvalidType = (data) => TypedError({
+const InvalidType = (data) => ({
   type: 'Item.invalid_data',
   message: `Invalid type for: ${data}`
 })
 
-const MissingFields = (fields, type) => TypedError({
-  type: type || 'Item.missing_required_fields',
-  message: `${fields.join(', ')} ${fields.length > 0 ? 'fields' : 'field'} required`
+const MissingField = (field, type) => ({
+  type: type || 'Item.missing_required_field',
+  message: `${field} required`
 })
 
 module.exports = ({
@@ -31,28 +31,28 @@ module.exports = ({
   let validItem = null
 
   if (!validator.isUUID(id)) {
-    errorsObj.id = MissingFields('Id')
+    errorsObj.id = MissingField('Id')
   }
-  if (!location.trim()) {
-    errorsObj.location = MissingFields('Location')
+  if (!location || !location.trim()) {
+    errorsObj.location = MissingField('Location')
   }
   if (!STATUS[status]) {
     errorsObj.status = InvalidType('Status')
   }
   if (!createdAt) {
-    errorsObj.createdAt = MissingFields('Timestamp')
+    errorsObj.createdAt = MissingField('Timestamp')
   }
   if (!validator.isUUID(creatorId)) {
-    errorsObj.creatorId = MissingFields('Creator Id')
+    errorsObj.creatorId = MissingField('Creator Id')
   }
-  if (!creatorName.trim()) {
-    errorsObj.creatorName = MissingFields('Creator username')
+  if (!creatorName || !creatorName.trim()) {
+    errorsObj.creatorName = MissingField('Creator username')
   }
-  if (!assets.length) {
-    errorsObj.assets = MissingFields('At least one image')
+  if (!assets || !assets.length) {
+    errorsObj.assets = MissingField('At least one image')
   }
-  if (!categories.length) {
-    errorsObj.categories = MissingFields('At least one category')
+  if (!categories || !categories.length) {
+    errorsObj.categories = MissingField('At least one category')
   }
   if (comments && !Array.isArray(comments)) {
     errorsObj.comments = InvalidType('Comments')
@@ -77,13 +77,13 @@ module.exports = ({
       status,
       creatorId,
       creatorName,
-      createdAt,
+      createdAt: String(createdAt),
       assets,
       categories,
       comments,
-      stars,
+      stars: String(stars),
       site,
-      relevancy
+      relevancy: String(relevancy)
     }
   }
   return { isValid, validItem, errorsObj }

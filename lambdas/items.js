@@ -16,6 +16,7 @@ const Item = ItemsConfig(db)
 
 // Routes
 app.post('/item', async (req, res) => {
+  console.log(req.body)
   try {
     const newItem = req.body
     newItem.creatorId = req.user.id
@@ -26,7 +27,7 @@ app.post('/item', async (req, res) => {
   } catch (err) {
     console.log(err)
 
-    res.status(err.statusCode).json({ error: err.message, errors: err.errors })
+    res.status(err.statusCode).json({ error: err.message, errorFields: err.errors })
   }
 })
 

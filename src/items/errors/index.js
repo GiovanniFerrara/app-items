@@ -30,7 +30,8 @@ const Unathorized = (err) => TypedError({
 const ValidationFailed = (errors) => TypedError({
   type: 'Item.invalid_data',
   message: 'Invalid data provided',
-  errors
+  errors,
+  statusCode: 400
 })
 
 module.exports = { MissingFields, DataBaseError, AuthError, Unathorized, ValidationFailed }
