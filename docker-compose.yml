@@ -5,8 +5,7 @@ services:
     environment:
       - DYNAMODB_TABLE=items-test
       - IS_LOCAL_ENV=true
-      - JWT_SECRET=test-env-secret
-
+      - USERS_URL="https://a1be8pek64.execute-api.eu-west-2.amazonaws.com/giov/user"
     command: npm run test
     volumes:
       - ~/.aws/:/root/.aws/

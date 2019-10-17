@@ -7,20 +7,26 @@ const middleware = require('../src/middleware')
 const app = express()
 
 // User middleware to authenticate requests
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(middleware.checkAuth)
 
 // pass db instance to unser model
-// const Item = ItemsConfig(db)
+const Item = ItemsConfig(db)
 
 // Routes
-
-app.get('/item', async (req, res) => {
+app.post('/item', async (req, res) => {
   try {
-    res.send(req.user)
+    const newItem = req.body
+    newItem.creatorId = req.user.id
+    newItem.creatorName = req.user.username
+
+    const itemCreated = await Item.create(newItem)
+    res.json(itemCreated)
   } catch (err) {
     console.log(err)
 
-    res.status(err.statusCode).json({ error: err.message })
+    res.status(err.statusCode).json({ error: err.message, errors: err.errors })
   }
 })
 

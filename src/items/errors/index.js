@@ -1,21 +1,14 @@
 const TypedError = require('error/typed')
 
-const MissingFields = (fields) => TypedError({
-  type: 'User.missing_required_fields',
-  message: `${fields.join(', ')} are required`,
+const MissingFields = (fields, type) => TypedError({
+  type: type || 'Item.missing_required_fields',
+  message: `${fields.join(', ')} ${fields.length > 0 ? 'fields' : 'field'} required`,
   statusCode: 400
 })
 
 const DataBaseError = (err) => TypedError({
   type: 'User.query_error',
   message: 'There was a problem with the database: ',
-  debug: err,
-  statusCode: 500
-})
-
-const QueryError = (err) => TypedError({
-  type: 'User.query_error',
-  message: 'Database error.',
   debug: err,
   statusCode: 500
 })
@@ -34,4 +27,10 @@ const Unathorized = (err) => TypedError({
   statusCode: 401
 })
 
-module.exports = { MissingFields, DataBaseError, QueryError, AuthError, Unathorized }
+const ValidationFailed = (errors) => TypedError({
+  type: 'Item.invalid_data',
+  message: 'Invalid data provided',
+  errors
+})
+
+module.exports = { MissingFields, DataBaseError, AuthError, Unathorized, ValidationFailed }

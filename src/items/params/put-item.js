@@ -6,6 +6,7 @@ module.exports = ({
   location,
   status = STATUS.AVAILABLE,
   creatorId,
+  creatorName,
   createdAt,
   assets = [],
   categories = [],
@@ -14,21 +15,19 @@ module.exports = ({
   site,
   relevancy = 0
 }) => {
-  const requiredProperties = {
-    id: { S: id },
-    creatorId: creatorId,
-    'location-status': { S: `${location}-${status}` },
-    location: { S: location },
-    status: { S: status },
-    createdAt: { S: createdAt },
-    assets: { L: assets },
-    categories: { L: categories },
-    stars: { N: stars },
-    relevancy: { N: relevancy }
-  }
   const params = {
     Item: {
-      ...requiredProperties,
+      id: { S: id },
+      creatorId: { S: creatorId },
+      creatorName: { S: creatorName },
+      'location-status': { S: `${location}-${status}` },
+      location: { S: location },
+      status: { S: status },
+      createdAt: { S: createdAt },
+      assets: { L: assets },
+      categories: { L: categories },
+      stars: { N: stars },
+      relevancy: { N: relevancy },
       ...addOptionalProperties(
         { comments, type: 'L' },
         { site, type: 'S' })
