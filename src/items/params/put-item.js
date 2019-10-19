@@ -8,31 +8,35 @@ module.exports = ({
   creatorId,
   creatorName,
   createdAt,
-  assets = [],
-  categories = [],
-  comments,
+  assets,
+  categories,
   stars = 0,
-  site,
-  relevancy = 0
+  relevancy = 0,
+  comments,
+  site
 }) => {
   const params = {
     Item: {
-      id: { S: id },
-      creatorId: { S: creatorId },
-      creatorName: { S: creatorName },
-      'location-status': { S: `${location}-${status}` },
-      location: { S: location },
-      status: { S: status },
-      createdAt: { S: createdAt },
-      assets: { L: assets },
-      categories: { L: categories },
-      stars: { N: stars },
-      relevancy: { N: relevancy },
-      ...addOptionalProperties(
-        { comments, type: 'L' },
-        { site, type: 'S' })
+      id,
+      location,
+      status,
+      creatorId,
+      creatorName,
+      createdAt,
+      assets,
+      categories,
+      site,
+      relevancy,
+      ...addOptionalProperties([
+        comments,
+        site
+      ])
     },
     TableName: process.env.DYNAMODB_TABLE
   }
+  console.log(addOptionalProperties([
+    comments,
+    site
+  ]))
   return params
 }

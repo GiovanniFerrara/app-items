@@ -16,7 +16,6 @@ const Item = ItemsConfig(db)
 
 // Routes
 app.post('/item', async (req, res) => {
-  console.log(req.body)
   try {
     const newItem = req.body
     newItem.creatorId = req.user.id

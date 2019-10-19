@@ -5,7 +5,7 @@ services:
     environment:
       - DYNAMODB_TABLE=items-test
       - IS_LOCAL_ENV=true
-      - USERS_URL="https://a1be8pek64.execute-api.eu-west-2.amazonaws.com/giov/user"
+      - USERS_URL="https://qmk33jcqwh.execute-api.eu-west-2.amazonaws.com/giovanni/user"
     command: npm run test
     volumes:
       - ~/.aws/:/root/.aws/

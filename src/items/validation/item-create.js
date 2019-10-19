@@ -77,13 +77,13 @@ module.exports = ({
       status,
       creatorId,
       creatorName,
-      createdAt: String(createdAt),
+      createdAt,
       assets,
       categories,
       comments,
-      stars: String(stars),
+      stars,
       site,
-      relevancy: String(relevancy)
+      relevancy
     }
   }
   return { isValid, validItem, errorsObj }
