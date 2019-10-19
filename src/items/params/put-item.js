@@ -27,6 +27,7 @@ module.exports = ({
       categories,
       site,
       relevancy,
+      stars,
       ...addOptionalProperties([
         comments,
         site
@@ -34,9 +35,5 @@ module.exports = ({
     },
     TableName: process.env.DYNAMODB_TABLE
   }
-  console.log(addOptionalProperties([
-    comments,
-    site
-  ]))
   return params
 }

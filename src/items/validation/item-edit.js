@@ -1,6 +1,7 @@
 const validator = require('validator')
 const STATUS = require('../types/status')
 const SITE = require('../types/site')
+// const TypedError = require('error/typed')
 
 const InvalidType = (data) => ({
   type: 'Item.invalid_data',
@@ -18,10 +19,13 @@ module.exports = ({
   status,
   creatorId,
   creatorName,
-  createdAt,
+  updatedAt,
   assets,
   categories,
-  site
+  comments,
+  stars,
+  site,
+  relevancy
 }) => {
   const errorsObj = {}
   let validItem = null
@@ -35,8 +39,8 @@ module.exports = ({
   if (!STATUS[status]) {
     errorsObj.status = InvalidType('Status')
   }
-  if (!createdAt) {
-    errorsObj.createdAt = MissingField('Timestamp')
+  if (!updatedAt) {
+    errorsObj.updatedAt = MissingField('Timestamp')
   }
   if (!validator.isUUID(creatorId)) {
     errorsObj.creatorId = MissingField('Creator Id')
@@ -50,8 +54,17 @@ module.exports = ({
   if (!categories || !categories.length) {
     errorsObj.categories = MissingField('At least one category')
   }
+  if (comments && !Array.isArray(comments)) {
+    errorsObj.comments = InvalidType('Comments')
+  }
+  if (stars && !validator.isNumeric(stars)) {
+    errorsObj.stars = InvalidType('Stars')
+  }
   if (site && !SITE[site]) {
     errorsObj.stars = InvalidType('Site')
+  }
+  if (relevancy && !validator.isNumeric(relevancy)) {
+    errorsObj.relevancy = InvalidType('relevancy')
   }
 
   const errCount = Object.keys(errorsObj).length
@@ -64,10 +77,13 @@ module.exports = ({
       status,
       creatorId,
       creatorName,
-      createdAt,
+      updatedAt,
       assets,
       categories,
-      site
+      comments,
+      stars,
+      site,
+      relevancy
     }
   }
   return { isValid, validItem, errorsObj }
