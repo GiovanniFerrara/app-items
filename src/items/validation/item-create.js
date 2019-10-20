@@ -15,7 +15,6 @@ const MissingField = (field, type) => ({
 module.exports = ({
   id,
   location,
-  status,
   creatorId,
   creatorName,
   createdAt,
@@ -31,9 +30,6 @@ module.exports = ({
   }
   if (!location || !location.trim()) {
     errorsObj.location = MissingField('Location')
-  }
-  if (!STATUS[status]) {
-    errorsObj.status = InvalidType('Status')
   }
   if (!createdAt) {
     errorsObj.createdAt = MissingField('Timestamp')
@@ -61,7 +57,6 @@ module.exports = ({
     validItem = {
       id,
       location,
-      status,
       creatorId,
       creatorName,
       createdAt,

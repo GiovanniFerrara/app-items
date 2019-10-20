@@ -22,7 +22,7 @@ const AuthError = (err) => TypedError({
 
 const Unathorized = (err) => TypedError({
   type: 'Item.unathorized',
-  message: 'This resource requires proper authorization, login again.',
+  message: 'This action requires authentication, login again.',
   debug: err,
   statusCode: 401
 })
