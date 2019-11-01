@@ -36,7 +36,7 @@ const ValidationFailed = (errors) => TypedError({
 
 const BadRequest = () => TypedError({
   type: 'Item.bad_request',
-  message: 'This item does\'t exist.',
+  message: 'This item(s) doesn\'t exist.',
   statusCode: 404
 })
 
