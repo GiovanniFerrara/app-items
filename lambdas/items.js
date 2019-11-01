@@ -14,13 +14,12 @@ app.use(middleware.checkAuth)
 // pass db instance to unser model
 const Item = ItemsConfig(db)
 
-// Routes
+// post a new Item
 app.post('/item', async (req, res) => {
   try {
     const newItem = req.body
     newItem.creatorId = req.user.id
     newItem.creatorName = req.user.username
-
     const itemCreated = await Item.create(newItem)
     res.json(itemCreated)
   } catch (err) {
@@ -29,14 +28,25 @@ app.post('/item', async (req, res) => {
     res.status(err.statusCode).json({ error: err.message, type: err.type, errorFields: err.errors })
   }
 })
-
+// get an item
 app.get('/item/:id', async (req, res) => {
   try {
-    if (req.params.id) {
-      const item = await Item.getOne(req.params.id)
-      return res.json(item)
-    }
-    // res.json(Item.getList())
+    const item = await Item.getOne(req.params.id)
+    res.json(item)
+  } catch (err) {
+    console.log(err)
+
+    res.status(err.statusCode).json({ error: err.message, type: err.type })
+  }
+})
+
+// get a all the items or all in a specific location
+app.get('/item', async (req, res) => {
+  try {
+    const { chunkSize, lastItemId, location } = req.query
+    const items = await Item.getAll({ chunkSize, lastItemId, location })
+
+    res.json(items)
   } catch (err) {
     console.log(err)
 
