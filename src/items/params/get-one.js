@@ -1,8 +1,6 @@
 module.exports = (id) => ({
   Key: {
-    id: {
-      S: id
-    }
+    id
   },
   TableName: process.env.DYNAMODB_TABLE
 })

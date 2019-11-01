@@ -8,12 +8,13 @@ const getOne = (db) => async (id) => {
     if (err) {
       reject(err)
     }
-    db.getItem(params.getOne).Promise()
+    db.get(params.getOne(id)).promise()
       .then((data) => {
-        return data
+        resolve(data.Item)
       })
       .catch((e) => {
-        reject(errors.NotFound())
+        console.log(e)
+        reject(errors.NotFound(e))
       })
   })
 }

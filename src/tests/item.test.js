@@ -41,33 +41,32 @@ describe('Create, validate and save item into database', () => {
     expect(newItem.site).toBe('HOMETAKE')
   })
 
-  // test('should return an error because of missing required categories', async () => {
-  //   const invalidItem = { ...validItem }
-  //   delete invalidItem.categories
-  //   try {
-  //     await Item.create(invalidItem)
-  //   } catch (e) {
-  //     expect(e.message).toEqual(errors.ValidationFailed()().message)
-  //   }
-  // })
+  test('should return an error because of missing required categories', async () => {
+    const invalidItem = { ...validItem }
+    delete invalidItem.categories
+    try {
+      await Item.create(invalidItem)
+    } catch (e) {
+      expect(e.message).toEqual(errors.ValidationFailed()().message)
+    }
+  })
 
-  // test('should return an error because of missing required fields', async () => {
-  //   const invalidItem = { ...validItem }
-  //   delete invalidItem.creatorId
-  //   delete invalidItem.assets
-  //   try {
-  //     await Item.create(invalidItem)
-  //   } catch (e) {
-  //     expect(e.errorFields).toHaveProperty('assets')
-  //     expect(e.errorFields).toHaveProperty('creatorId')
-  //   }
-  // })
+  test('should return an error because of missing required fields', async () => {
+    const invalidItem = { ...validItem }
+    delete invalidItem.creatorId
+    delete invalidItem.assets
+    try {
+      await Item.create(invalidItem)
+    } catch (e) {
+      expect(e.errors).toHaveProperty('assets')
+      expect(e.errors).toHaveProperty('creatorId')
+    }
+  })
 })
 
-describe('get one item', () => {
-  test('should get one item with success', async () => {
-    const itemFound = await Item.getone(createdItem.id)
-    console.log('AOOOOAOAOAOAOOOOO', itemFound)
+describe('Get one item by Id', () => {
+  test('should get an item with success', async () => {
+    const itemFound = await Item.getOne(createdItem.id)
     expect(itemFound).toHaveProperty('creatorId')
     expect(itemFound).toHaveProperty('location')
   })

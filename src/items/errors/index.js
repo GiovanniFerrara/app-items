@@ -20,8 +20,8 @@ const AuthError = (err) => TypedError({
   statusCode: 500
 })
 
-const Unathorized = (err) => TypedError({
-  type: 'Item.unathorized',
+const Unauthorized = (err) => TypedError({
+  type: 'Item.Unauthorized',
   message: 'This action requires authentication, login again.',
   debug: err,
   statusCode: 401
@@ -46,4 +46,4 @@ const NotFound = () => TypedError({
   statusCode: 404
 })
 
-module.exports = { MissingFields, DataBaseError, AuthError, Unathorized, ValidationFailed, BadRequest, NotFound }
+module.exports = { MissingFields, DataBaseError, AuthError, Unauthorized, ValidationFailed, BadRequest, NotFound }

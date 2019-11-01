@@ -26,20 +26,21 @@ app.post('/item', async (req, res) => {
   } catch (err) {
     console.log(err)
 
-    res.status(err.statusCode).json({ error: err.message, errorFields: err.errors })
+    res.status(err.statusCode).json({ error: err.message, type: err.type, errorFields: err.errors })
   }
 })
 
 app.get('/item/:id', async (req, res) => {
   try {
     if (req.params.id) {
-      return res.json(Item.getOne(req.params.id))
+      const item = await Item.getOne(req.params.id)
+      return res.json(item)
     }
     // res.json(Item.getList())
   } catch (err) {
     console.log(err)
 
-    res.status(err.statusCode).json({ error: err.message, errorFields: err.errors })
+    res.status(err.statusCode).json({ error: err.message, type: err.type })
   }
 })
 

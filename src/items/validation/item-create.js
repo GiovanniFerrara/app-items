@@ -12,9 +12,9 @@ const MissingField = (field, type) => ({
 })
 
 module.exports = ({
-  id,
+  id = '',
   location,
-  creatorId,
+  creatorId = '',
   creatorName,
   createdAt,
   assets,
