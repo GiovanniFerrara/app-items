@@ -71,3 +71,11 @@ describe('Get one item by Id', () => {
     expect(itemFound).toHaveProperty('location')
   })
 })
+
+describe('Get all items', () => {
+  test('should get all item with pagination', async () => {
+    const secondItem = await Item.create(validItem)
+    const itemsFound = await Item.getAll({})
+    expect(itemsFound.items).toHaveLength(2)
+  })
+})

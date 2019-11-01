@@ -1,4 +1,4 @@
-module.exports = ({ chunkSize = 20, lastItemId }) => ({
+module.exports = ({ chunkSize, lastItemId }) => ({
   TableName: process.env.DYNAMODB_TABLE,
   Limit: chunkSize,
   ExclusiveStartKey: lastItemId ? {
