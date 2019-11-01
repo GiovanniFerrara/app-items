@@ -30,6 +30,19 @@ app.post('/item', async (req, res) => {
   }
 })
 
+app.get('/item/:id', async (req, res) => {
+  try {
+    if (req.params.id) {
+      return res.json(Item.getOne(req.params.id))
+    }
+    // res.json(Item.getList())
+  } catch (err) {
+    console.log(err)
+
+    res.status(err.statusCode).json({ error: err.message, errorFields: err.errors })
+  }
+})
+
 process.env.IS_LOCAL_ENV && app.listen(3000, () => console.log(`Server listening on: 3000, env: ${process.env.DYNAMODB_TABLE}`))
 
 module.exports.handler = serverless(app)

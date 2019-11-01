@@ -34,4 +34,16 @@ const ValidationFailed = (errors) => TypedError({
   statusCode: 400
 })
 
-module.exports = { MissingFields, DataBaseError, AuthError, Unathorized, ValidationFailed }
+const BadRequest = () => TypedError({
+  type: 'Item.bad_request',
+  message: 'This item does\'t exist.',
+  statusCode: 404
+})
+
+const NotFound = () => TypedError({
+  type: 'Item.not_found',
+  message: 'Item not found.',
+  statusCode: 404
+})
+
+module.exports = { MissingFields, DataBaseError, AuthError, Unathorized, ValidationFailed, BadRequest, NotFound }

@@ -9,9 +9,11 @@ module.exports = async (req, res, next) => {
       const userPayload = await User.getIdentity(token)
       const { username, id, isAdmin } = userPayload.data
       req.user = { username, id, isAdmin }
+      next()
     } catch (err) {
-      res.status(errors.Unathorized(err).statusCode).send({ error: errors.Unathorized(err).message })
+      res.status(errors.Unauthorized(err).statusCode).send({ error: errors.Unauthorized(err).message })
     }
+  } else {
+    res.status(errors.Unauthorized('Missing token in headers').statusCode).send({ error: errors.Unauthorized('Missing token in headers').message })
   }
-  next()
 }

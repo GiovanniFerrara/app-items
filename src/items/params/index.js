@@ -1,5 +1,5 @@
-const getItemById = require('./get-item-by-id')
+const getOne = require('./get-one')
 const putItem = require('./put-item')
 const scanBy = require('./scan-by')
 
-module.exports = ({ putItem, scanBy, getItemById })
+module.exports = ({ putItem, scanBy, getOne })

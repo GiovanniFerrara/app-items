@@ -1,5 +1,4 @@
 const validator = require('validator')
-const STATUS = require('../types/status')
 const SITE = require('../types/site')
 
 const InvalidType = (data) => ({
