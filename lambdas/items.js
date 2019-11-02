@@ -58,6 +58,20 @@ app.get('/item', async (req, res) => {
   }
 })
 
+// get all the items if admin or for in specific location-status
+app.put('/item', async (req, res) => {
+  try {
+    const itemToEdit = req.body
+    const user = req.user
+    const itemEdited = await Item.edit({ item: itemToEdit, user })
+    res.json(itemEdited)
+  } catch (err) {
+    console.log(err)
+
+    res.status(err.statusCode).json({ error: err.message, type: err.type, errorFields: err.errors })
+  }
+})
+
 process.env.IS_LOCAL_ENV && app.listen(3000, () => console.log(`Server listening on: 3000, env: ${process.env.DYNAMODB_TABLE}`))
 
 module.exports.handler = serverless(app)

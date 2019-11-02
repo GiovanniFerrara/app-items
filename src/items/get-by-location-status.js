@@ -12,11 +12,9 @@ const getByLocationStatus = (db) => async ({ chunkSize = '20', lastItemId, locat
     if (err) {
       return reject(err)
     }
-    console.log(params.getByLocationStatus({ chunkSize: chunkSize, lastItemId, location, status }))
     db.query(params.getByLocationStatus({ chunkSize: chunkSize, lastItemId, location, status })).promise()
       .then((data) => {
         const lastItemId = data.LastEvaluatedKey ? data.LastEvaluatedKey.id : null
-        console.log(data)
         resolve({ items: data.Items, lastItemId })
       })
       .catch((e) => {

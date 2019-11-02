@@ -24,6 +24,7 @@ module.exports = ({
       creatorId,
       creatorName,
       createdAt,
+      updatedAt: createdAt,
       assets,
       categories,
       site,

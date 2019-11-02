@@ -76,7 +76,6 @@ describe('Get all items', () => {
   test('should get all item with pagination', async () => {
     await Item.create(validItem)
     const itemsFound = await Item.getAll({})
-    console.log(itemsFound)
     expect(itemsFound.items).toHaveLength(2)
   })
 })
@@ -90,5 +89,40 @@ describe('Get by location and status', () => {
   test('shouldnt get any item', async () => {
     const itemsFound = await Item.getByLocationStatus({ location: 'cina' })
     expect(itemsFound.items).toHaveLength(0)
+  })
+})
+
+describe('Edit an item', () => {
+  test('should edit an item with success', async () => {
+    let res, editedItem
+    try {
+      const newItem = await Item.create(validItem)
+      editedItem = { ...newItem, assets: [{ id: '22', link: 'http://otherlink.com' }, { id: '33', link: 'http://still.com' }] }
+      res = await Item.edit({ item: editedItem, user: user })
+    } catch (e) {
+      console.log(e)
+    }
+
+    expect(res.assets).toEqual(editedItem.assets)
+  })
+
+  test('shouldnt edit an item because of missing id', async () => {
+    try {
+      const newItem = await Item.create(validItem)
+      const editedItem = { ...newItem, id: '' }
+      await Item.edit({ item: editedItem, user: user })
+    } catch (e) {
+      expect(e).toBeDefined()
+    }
+  })
+
+  test('shouldnt edit an item because another user creator', async () => {
+    try {
+      const newItem = await Item.create(validItem)
+      const editedItem = { ...newItem }
+      await Item.edit({ item: editedItem, user: { id: '6e3b8bb2-a7b3-49c2-a80b-78dc91b88da8' } })
+    } catch (e) {
+      expect(e).toBeDefined()
+    }
   })
 })
