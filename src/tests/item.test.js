@@ -97,13 +97,14 @@ describe('Edit an item', () => {
     let res, editedItem
     try {
       const newItem = await Item.create(validItem)
-      editedItem = { ...newItem, assets: [{ id: '22', link: 'http://otherlink.com' }, { id: '33', link: 'http://still.com' }] }
+      // try to change status as well, but should not change it
+      editedItem = { ...newItem, status: status.UNAVAILABLE, assets: [{ id: '22', link: 'http://otherlink.com' }, { id: '33', link: 'http://still.com' }] }
       res = await Item.edit({ item: editedItem, user: user })
     } catch (e) {
       console.log(e)
     }
-
     expect(res.assets).toEqual(editedItem.assets)
+    expect(res.status).toEqual(status.AVAILABLE)
   })
 
   test('shouldnt edit an item because of missing id', async () => {

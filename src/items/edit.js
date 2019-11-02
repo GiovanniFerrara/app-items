@@ -4,7 +4,7 @@ const errors = require('./errors')
 
 const edit = (db) => async ({ item, user }) => {
   return new Promise((resolve, reject) => {
-    if (item.creatorId !== user.id) {
+    if (item.creatorId !== user.id && !user.isAdmin) {
       reject(errors.Unauthorized('Request from a wrong user'))
     }
 
@@ -13,12 +13,13 @@ const edit = (db) => async ({ item, user }) => {
     if (!isValid) {
       reject(errors.ValidationFailed(errorsObj))
     }
-    db.update(params.edit(validItem), (err) => {
-      if (err) {
+    db.update(params.edit(validItem)).promise()
+      .then((editedItem) => {
+        resolve(editedItem.Attributes)
+      })
+      .catch((err) => {
         return reject(errors.DataBaseError(err))
-      }
-      resolve(validItem)
-    })
+      })
   })
 }
 
