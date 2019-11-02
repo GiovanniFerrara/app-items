@@ -15,7 +15,6 @@ const getAll = (db) => async ({ chunkSize = '20', lastItemId }) => {
         resolve({ items: data.Items, lastItemId })
       })
       .catch((e) => {
-        console.log(e)
         reject(errors.NotFound(e))
       })
   })

@@ -19,6 +19,7 @@ module.exports = ({
     Item: {
       id,
       location,
+      'location-status': `${location}-${status}`,
       status,
       creatorId,
       creatorName,

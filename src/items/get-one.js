@@ -13,7 +13,6 @@ const getOne = (db) => async (id) => {
         resolve(data.Item)
       })
       .catch((e) => {
-        console.log(e)
         reject(errors.NotFound(e))
       })
   })

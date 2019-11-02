@@ -76,6 +76,19 @@ describe('Get all items', () => {
   test('should get all item with pagination', async () => {
     await Item.create(validItem)
     const itemsFound = await Item.getAll({})
+    console.log(itemsFound)
     expect(itemsFound.items).toHaveLength(2)
+  })
+})
+
+describe('Get by location and status', () => {
+  test('should get all item with pagination', async () => {
+    const itemsFound = await Item.getByLocationStatus({ location: validItem.location })
+    expect(itemsFound.items).toHaveLength(2)
+  })
+
+  test('shouldnt get any item', async () => {
+    const itemsFound = await Item.getByLocationStatus({ location: 'cina' })
+    expect(itemsFound.items).toHaveLength(0)
   })
 })

@@ -40,15 +40,15 @@ app.get('/item/:id', async (req, res) => {
   }
 })
 
-// get a all the items if admin or for in specific location-status
+// get all the items if admin or for in specific location-status
 app.get('/item', async (req, res) => {
   try {
     const { chunkSize, lastItemId, location, status } = req.query
     if (req.user.idAdmin && !req.query.location) {
       const items = await Item.getAll({ chunkSize, lastItemId, location })
+
       return res.json(items)
     }
-
     const items = await Item.getByLocationStatus({ chunkSize, lastItemId, location, status })
     res.json(items)
   } catch (err) {
