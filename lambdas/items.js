@@ -58,7 +58,7 @@ app.get('/item', async (req, res) => {
   }
 })
 
-// get all the items if admin or for in specific location-status
+// user or admin should be able to change assets ,categories, site, (and description in the future) without changing other stuff
 app.put('/item', async (req, res) => {
   try {
     const itemToEdit = req.body

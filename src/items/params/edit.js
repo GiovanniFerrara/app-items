@@ -11,14 +11,16 @@ module.exports = ({
       '#updatedAt': 'updatedAt',
       '#assets': 'assets',
       '#categories': 'categories',
-      '#site': 'site'
-
+      '#site': 'site',
+      '#id': 'id'
     },
+    ConditionExpression: '#id = :id',
     ExpressionAttributeValues: {
       ':updatedAt': updatedAt,
       ':assets': assets,
       ':categories': categories,
-      ':site': site
+      ':site': site,
+      ':id': id
     },
     Key: { id },
     TableName: process.env.DYNAMODB_TABLE,
