@@ -19,9 +19,10 @@ const user = {
 const validItem = {
   location: 'marocco',
   creatorId: user.id,
+  description: 'this is a description',
   creatorName: user.username,
   createdAt: new Date().toString(),
-  assets: [{ name: '3334452.jpg', link: 'http://somelink.com' }, { name: '342413.jpg', link: 'http://someotherlink.com' }],
+  assets: [{ name: '3334452.jpg' }, { name: '342413.jpg' }],
   categories: [{ id: '2313', name: 'sofa' }, { id: '342413', name: 'chairs' }],
   site: site.HOMETAKE,
   localization: { lat: '32.342423', lng: '23.234234', address: 'pispisia' },
@@ -37,6 +38,8 @@ describe('Create, validate and save item into database', () => {
     expect(newItem).toHaveProperty('id')
     expect(newItem).toHaveProperty('creatorName')
     expect(newItem).toHaveProperty('assets')
+    expect(newItem).toHaveProperty('location')
+    expect(newItem).toHaveProperty('description')
     expect(Array.isArray(newItem.categories)).toBeTruthy()
     expect(newItem.assets).toHaveLength(2)
     expect(newItem.site).toBe('HOMETAKE')
@@ -65,7 +68,7 @@ describe('Create, validate and save item into database', () => {
   })
 
   test('should return an error because of invalid assets, missing name', async () => {
-    const invalidItem = { ...validItem, assets: [{ name: '3334452.jpg' }, { name: '342413.jpg', link: 'http://someotherlink.com' }] }
+    const invalidItem = { ...validItem, assets: [{ name: '3334452.jpg' }, {}] }
     try {
       await Item.create(invalidItem)
     } catch (e) {
@@ -74,7 +77,7 @@ describe('Create, validate and save item into database', () => {
   })
 
   test('should return an error because of invalid category, missing name', async () => {
-    const invalidItem = { ...validItem, categories: [{ id: '6e3b8bb2-a7b3-49c2-a80b-78dc91b88de3' }, { name: '342413.jpg', id: '6e3b8bb2-a7b3-49c2-a80b-78dc91b88da2' }] }
+    const invalidItem = { ...validItem, categories: [{ id: '6e3b8bb2-a7b3-49c2-a80b-78dc91b88de3' }, { name: 'bed', id: '6e3b8bb2-a7b3-49c2-a80b-78dc91b88da2' }] }
     try {
       await Item.create(invalidItem)
     } catch (e) {
@@ -117,12 +120,13 @@ describe('Edit an item', () => {
     try {
       const newItem = await Item.create(validItem)
       // try to change status as well, but should not change it
-      editedItem = { ...newItem, status: status.UNAVAILABLE, assets: [{ id: '22', link: 'http://otherlink.com' }, { id: '33', link: 'http://still.com' }] }
+      editedItem = { ...newItem, status: status.UNAVAILABLE, description: 'Item changed', assets: [{ name: '22' }, { name: '33' }] }
       res = await Item.edit({ item: editedItem, user: user })
     } catch (e) {
       console.log(e)
     }
     expect(res.assets).toEqual(editedItem.assets)
+    expect(res.description).toBe('Item changed')
     expect(res.status).toEqual(status.AVAILABLE)
   })
 

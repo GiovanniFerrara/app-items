@@ -40,7 +40,7 @@ module.exports = ({
   }
 
   if (!validator.isISO8601(createdAt)) {
-    errorsObj.localization = InvalidType('Timestamp')
+    errorsObj.createdAt = InvalidType('Timestamp')
   }
 
   if (!validator.isUUID(creatorId)) {
@@ -57,12 +57,11 @@ module.exports = ({
   }
 
   assets && assets.length && assets.forEach(ass => {
-    if (!ass.name || !ass.link) {
+    if (!ass.name) {
       errorsObj.assets = InvalidType('Image type')
       return
     }
     ass.name = validator.escape(ass.name)
-    ass.link = validator.escape(ass.link)
   })
 
   if (!categories || !categories.length) {
@@ -88,9 +87,11 @@ module.exports = ({
   if (site && !SITE[site]) {
     errorsObj.stars = InvalidType('Site')
   }
-  if (description && (!description.trim().length() > 8)) {
-    errorsObj.stars = InvalidType('Description (optional field), it should contain at least 8 chars')
+
+  if (description && ((description.length < 5) || (description.length > 250))) {
+    errorsObj.description = InvalidType('Description (optional field), it should contain between 5 and 250 chars ')
   }
+
   if (description) {
     description = validator.escape(description)
   }

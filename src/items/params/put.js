@@ -13,12 +13,15 @@ module.exports = ({
   stars = 0,
   relevancy = 0,
   comments,
-  site
+  site,
+  description,
+  localization
 }) => {
   const params = {
     Item: {
       id,
       location,
+      localization,
       'location-status': `${location}-${status}`,
       status,
       creatorId,
@@ -32,7 +35,8 @@ module.exports = ({
       stars,
       ...addOptionalProperties([
         comments,
-        site
+        site,
+        description
       ])
     },
     TableName: process.env.DYNAMODB_TABLE
