@@ -21,9 +21,10 @@ const validItem = {
   creatorId: user.id,
   creatorName: user.username,
   createdAt: new Date().toString(),
-  assets: [{ id: '3334452', link: 'http://somelink.com' }, { id: '342413', link: 'http://someotherlink.com' }],
+  assets: [{ name: '3334452.jpg', link: 'http://somelink.com' }, { name: '342413.jpg', link: 'http://someotherlink.com' }],
   categories: [{ id: '2313', name: 'sofa' }, { id: '342413', name: 'chairs' }],
   site: site.HOMETAKE,
+  localization: { lat: '32.342423', lng: '23.234234', address: 'pispisia' },
   status: status.AVAILABLE
 }
 
@@ -47,7 +48,7 @@ describe('Create, validate and save item into database', () => {
     try {
       await Item.create(invalidItem)
     } catch (e) {
-      expect(e.message).toEqual(errors.ValidationFailed()().message)
+      expect(e.message).toEqual(errors.ValidationFailed().message)
     }
   })
 
@@ -60,6 +61,24 @@ describe('Create, validate and save item into database', () => {
     } catch (e) {
       expect(e.errors).toHaveProperty('assets')
       expect(e.errors).toHaveProperty('creatorId')
+    }
+  })
+
+  test('should return an error because of invalid assets, missing name', async () => {
+    const invalidItem = { ...validItem, assets: [{ name: '3334452.jpg' }, { name: '342413.jpg', link: 'http://someotherlink.com' }] }
+    try {
+      await Item.create(invalidItem)
+    } catch (e) {
+      expect(e.errors).toHaveProperty('assets')
+    }
+  })
+
+  test('should return an error because of invalid category, missing name', async () => {
+    const invalidItem = { ...validItem, categories: [{ id: '6e3b8bb2-a7b3-49c2-a80b-78dc91b88de3' }, { name: '342413.jpg', id: '6e3b8bb2-a7b3-49c2-a80b-78dc91b88da2' }] }
+    try {
+      await Item.create(invalidItem)
+    } catch (e) {
+      expect(e.errors).toHaveProperty('categories')
     }
   })
 })
