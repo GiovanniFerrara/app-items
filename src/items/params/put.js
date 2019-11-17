@@ -12,7 +12,6 @@ module.exports = ({
   categories,
   stars = 0,
   relevancy = 0,
-  comments,
   site,
   description,
   localization
@@ -33,8 +32,8 @@ module.exports = ({
       site,
       relevancy,
       stars,
+      comments: [],
       ...addOptionalProperties([
-        comments,
         site,
         description
       ])

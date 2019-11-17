@@ -33,7 +33,7 @@ module.exports = ({
   if (!location || !location.trim()) {
     errorsObj.location = MissingField('Location')
   }
-  location = validator.escape(location)
+  location && (location = validator.escape(location))
 
   if (!createdAt) {
     errorsObj.createdAt = MissingField('Timestamp')
@@ -50,7 +50,7 @@ module.exports = ({
   if (!creatorName || !creatorName.trim()) {
     errorsObj.creatorName = MissingField('Creator username')
   }
-  creatorName = validator.escape(creatorName)
+  creatorName && (creatorName = validator.escape(creatorName))
 
   if (!assets || !assets.length) {
     errorsObj.assets = MissingField('At least one image')
@@ -61,7 +61,7 @@ module.exports = ({
       errorsObj.assets = InvalidType('Image type')
       return
     }
-    ass.name = validator.escape(ass.name)
+    ass && (ass.name = validator.escape(ass.name))
   })
 
   if (!categories || !categories.length) {
@@ -73,7 +73,7 @@ module.exports = ({
       errorsObj.categories = InvalidType('Category')
       return
     }
-    validator.escape(cat.name)
+    cat && (validator.escape(cat.name))
   })
 
   if (!localization || (!localization.lat || !localization.lng) || (!localization.lat.trim() || !localization.lng.trim())) {
