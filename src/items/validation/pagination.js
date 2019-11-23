@@ -1,5 +1,5 @@
 const validator = require('validator')
-const errors = require('../errors')
+const errors = require('../../errors')
 
 module.exports = ({ chunkSize, lastItemId }) => {
   let error = null

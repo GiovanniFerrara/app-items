@@ -1,6 +1,6 @@
 const validate = require('./validation')
 const params = require('./params')
-const errors = require('./errors')
+const errors = require('../errors')
 
 const getAll = (db) => async ({ chunkSize = '20', lastItemId }) => {
   return new Promise((resolve, reject) => {

@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "dev": "./stage_question.sh ",
-    "test": "jest"
+    "test": "docker-compose up",
+    "test-docker": "jest"
   },
   "repository": {
     "type": "git",

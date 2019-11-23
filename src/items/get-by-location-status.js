@@ -1,6 +1,6 @@
 const validate = require('./validation')
 const params = require('./params')
-const errors = require('./errors')
+const errors = require('../errors')
 const types = require('./types/status')
 
 const getByLocationStatus = (db) => async ({ chunkSize = '20', lastItemId, location, status = types.AVAILABLE }) => {

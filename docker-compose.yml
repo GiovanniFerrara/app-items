@@ -6,7 +6,7 @@ services:
       - DYNAMODB_TABLE=items-test
       - IS_LOCAL_ENV=true
       - USERS_URL="https://qmk33jcqwh.execute-api.eu-west-2.amazonaws.com/giovanni/user"
-    command: npm run test
+    command: npm run test-docker
     volumes:
       - ~/.aws/:/root/.aws/
       - .:/usr/app/

@@ -1,6 +1,6 @@
 const validate = require('./validation')
 const params = require('./params')
-const errors = require('./errors')
+const errors = require('../errors')
 
 const getOne = (db) => async (id) => {
   return new Promise((resolve, reject) => {

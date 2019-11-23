@@ -1,5 +1,5 @@
 const User = require('../services/users')
-const errors = require('../items/errors')
+const errors = require('../errors')
 
 module.exports = async (req, res, next) => {
   const bearerToken = req.headers['x-authorization']

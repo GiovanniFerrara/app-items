@@ -3,7 +3,7 @@ const db = require('../db')
 const site = require('../items/types/site')
 const status = require('../items/types/status')
 const clearTable = require('./utils/clear-table')
-const errors = require('../items/errors')
+const errors = require('../errors')
 
 afterAll(async () => {
   await clearTable(db)

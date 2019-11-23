@@ -1,6 +1,6 @@
 const validate = require('./validation')
 const params = require('./params')
-const errors = require('./errors')
+const errors = require('../errors')
 const uuid = require('uuid')
 
 const create = (db) => async (item) => {

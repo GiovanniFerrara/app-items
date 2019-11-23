@@ -1,6 +1,6 @@
-// const validate = require('./validation')
+const validate = require('./validation/comment')
 const params = require('./params')
-// const errors = require('./errors')
+const errors = require('./errors')
 const uuid = require('uuid')
 
 const create = (db) => async (item) => {
@@ -8,14 +8,13 @@ const create = (db) => async (item) => {
     const id = uuid()
     item.id = id
     item.createdAt = new Date().toISOString()
-    // const { validItem, isValid, errorsObj } = validate.create(item)
-    // if (!isValid) {
-    //   reject(errors.ValidationFailed(errorsObj))
-    // }
-    db.update(params.create(item), (err) => {
+    const { validItem, isValid, errorsObj } = validate(item)
+    if (!isValid) {
+      reject(errors.ValidationFailed(errorsObj))
+    }
+    db.update(params.create(validItem), (err) => {
       if (err) {
-        console.log(err)
-        // return reject(errors.DataBaseError(err))
+        return reject(errors.DataBaseError(err))
       }
       resolve(item)
     })

@@ -30,7 +30,7 @@ const exampleItem = {
 
 const exampleComment1 = {
   itemId: '',
-  respondsToUserId: '',
+  respondsToCommentId: '',
   content: '<p> This is a cool comment </p>',
   avatar: 'https://awsbucket.com/image.jpg',
   images: [],
@@ -39,7 +39,7 @@ const exampleComment1 = {
 
 const exampleComment2 = {
   itemId: '',
-  respondsToUserId: '',
+  respondsToCommentId: '',
   content: '<p> This is a response </p>',
   avatar: 'https://awsbucket.com/image.jpg',
   images: [],

@@ -1,4 +1,4 @@
-const errors = require('../errors')
+const errors = require('../../errors')
 const statusTypes = require('../types/status')
 const validator = require('validator')
 
