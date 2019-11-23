@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "./stage_question.sh ",
     "test": "docker-compose up",
-    "test-docker": "jest"
+    "test-docker": "jest --runInBand"
   },
   "repository": {
     "type": "git",

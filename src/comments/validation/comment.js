@@ -54,10 +54,6 @@ module.exports = ({
     errorsObj.createdAt = InvalidType('Timestamp')
   }
 
-  if (!images || !images.length) {
-    errorsObj.images = MissingField('At least one image')
-  }
-
   images && images.length && images.forEach(img => {
     if (!img.name) {
       errorsObj.images = InvalidType('Image type')
@@ -66,8 +62,8 @@ module.exports = ({
     img && (img.name = validator.escape(img.name))
   })
 
-  if (!respondsToCommentId || !validator.isUUID(respondsToCommentId)) {
-    errorsObj.respondsToCommentId = InvalidType('Comment id type')
+  if (respondsToCommentId && !validator.isUUID(respondsToCommentId)) {
+    errorsObj.respondsToCommentId = InvalidType('Response comment id missing or invalid')
   }
 
   if (previousEdits && !previousEdits.length) {

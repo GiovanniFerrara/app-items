@@ -45,7 +45,7 @@ app.get('/item', async (req, res) => {
   try {
     const { chunkSize, lastItemId, location, status } = req.query
     if (req.user.idAdmin && !req.query.location) {
-      const items = await Item.getAll({ chunkSize, lastItemId, location })
+      const items = await Item.getAll({ chunkSize, lastItemId, location, isAdmin: true })
 
       return res.json(items)
     }

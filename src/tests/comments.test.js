@@ -29,27 +29,30 @@ const exampleItem = {
 }
 
 const exampleComment1 = {
-  itemId: '',
+  userId: user.id,
+  username: user.username,
   respondsToCommentId: '',
-  content: '<p> This is a cool comment </p>',
+  content: 'This is a cool comment',
   avatar: 'https://awsbucket.com/image.jpg',
   images: [],
   previousEdits: ['<p> This is a coal comment </p>', '<p> This is a coaol comment </p>']
 }
 
 const exampleComment2 = {
-  itemId: '',
-  respondsToCommentId: '',
-  content: '<p> This is a response </p>',
+  userId: user.id,
+  username: user.username,
+  content: 'This is a response',
   avatar: 'https://awsbucket.com/image.jpg',
   images: [],
-  previousEdits: ['<p> This is a coal comment </p>', '<p> This is a coaol comment </p>']
+  previousEdits: ['<p> This is a coal comment </p>', '<p> This is a coaol comment </p>'],
+  respondsToCommentId: '6e3b8bb2-a7b3-49c2-a80b-78dc91b88da2'
 }
 
 let createdItem
 beforeAll(async () => {
   createdItem = await Item.create(exampleItem)
   exampleComment1.itemId = createdItem.id
+  exampleComment2.itemId = createdItem.id
 })
 
 afterAll(async () => {
@@ -58,8 +61,14 @@ afterAll(async () => {
 
 describe('Create a new comment', () => {
   test('should create a new comment successfully', async () => {
-    const createdComment1 = await Comment.create(exampleComment1)
-    const createdComment2 = await Comment.create(exampleComment2)
+    let createdComment1
+    let createdComment2
+    try {
+      createdComment1 = await Comment.create(exampleComment1)
+      createdComment2 = await Comment.create(exampleComment2)
+    } catch (e) {
+      console.log(e)
+    }
     expect(createdComment1).toHaveProperty('id')
     expect(createdComment2).toHaveProperty('id')
   })

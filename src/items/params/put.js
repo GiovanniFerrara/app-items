@@ -1,4 +1,3 @@
-const addOptionalProperties = require('../../utils/add-optional-properties')
 const STATUS = require('../types/status')
 
 module.exports = ({
@@ -33,10 +32,7 @@ module.exports = ({
       relevancy,
       stars,
       comments: [],
-      ...addOptionalProperties([
-        site,
-        description
-      ])
+      description
     },
     TableName: process.env.DYNAMODB_TABLE
   }

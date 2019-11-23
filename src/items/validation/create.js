@@ -20,8 +20,8 @@ module.exports = ({
   createdAt,
   assets,
   categories,
-  description,
-  site
+  description = '',
+  site = SITE.HOMETAKE
 }) => {
   const errorsObj = {}
   let validItem = null
@@ -84,7 +84,7 @@ module.exports = ({
     errorsObj.localization = InvalidType('Localization')
   }
 
-  if (site && !SITE[site]) {
+  if (!SITE[site]) {
     errorsObj.stars = InvalidType('Site')
   }
 
