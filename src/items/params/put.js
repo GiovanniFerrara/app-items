@@ -32,7 +32,7 @@ module.exports = ({
       relevancy,
       stars,
       comments: [],
-      description
+      description: description || undefined
     },
     TableName: process.env.DYNAMODB_TABLE
   }

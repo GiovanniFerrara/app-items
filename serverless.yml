@@ -25,8 +25,24 @@ functions:
     handler: lambdas/items.handler
     events:
       - http:
-         path: items/new
-         method: post
+          path: item
+          method: post
+      - http:
+          path: item/{id}
+          method: get
+      - http:
+          path: item
+          method: get
+      - http:
+          path: item
+          method: put
+
+  comments:
+    handler: lambdas/comments.handler
+    events:
+      - http:
+          path: comment
+          method: post
 
 resources:
   Resources:
